@@ -466,11 +466,13 @@ init_id		: ID
 
 stmt_list	: stmt_list stmt 
                 {
-                    /*TODO*/
+                    //jyhsu
+                    $$ = makeSibling($1, $2);
                 }
             | stmt
                 {
-                    /*TODO*/
+                    //jyhsu
+                    $$ = $1;
                 }
             ;
 
@@ -555,17 +557,21 @@ relop_expr	: relop_term
 
 relop_term	: relop_factor 
                 {
-                    /*TODO*/
+                    //jyhsu
+                    $$ = $1;
                 }
             | relop_term OP_AND relop_factor
                 {
-                    /*TODO*/
+                    //jyhsu
+                    $$ = makeExprNode(BINARY_OPERATION, BINARY_OP_AND);
+                    makeFamily($$, 2, $1, $3);
                 }
             ;
 
 relop_factor	: expr
                     {
-                        /*TODO*/
+                        //jyhsu
+                        $$ = $1;
                     }
                 | expr rel_op expr 
                     {
