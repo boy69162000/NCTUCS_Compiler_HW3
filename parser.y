@@ -645,8 +645,9 @@ factor
         }
     ;
 
-var_ref        : ID
- {
+var_ref
+    : ID
+        {
             /*TODO*/
         }
     | ID dim_list
@@ -656,15 +657,16 @@ var_ref        : ID
     ;
 
 
-dim_list    : dim_list MK_LB expr MK_RB
- {
+dim_list
+    : dim_list MK_LB expr MK_RB
+        {
             /*TODO*/
         }
     | MK_LB expr MK_RB
         {
             /*TODO*/
         }
-;
+    ;
 
 
 %%

@@ -98,9 +98,9 @@ typedef enum AST_TYPE {
 } AST_TYPE;
 
 
-//*************************
+// *************************
 // AST_NODE's semantic value
-//*************************
+// *************************
 
 typedef struct STMTSemanticValue {
     STMT_KIND kind;
@@ -121,7 +121,6 @@ typedef struct EXPRSemanticValue {
         BINARY_OPERATOR binaryOp;
         UNARY_OPERATOR unaryOp;
     } op;
-
 } EXPRSemanticValue;
 
 
@@ -177,9 +176,10 @@ typedef struct AST_NODE {
     } semantic_value;
 } AST_NODE;
 
-//typedef struct AST_NODE AST_NODE;
+// typedef struct AST_NODE AST_NODE;
 
 AST_NODE *Allocate(AST_TYPE type);
 void semanticAnalysis(AST_NODE *root);
 
-#endif
+#endif    // __HEADER_H__
+
