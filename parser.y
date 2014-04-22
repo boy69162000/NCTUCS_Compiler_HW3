@@ -425,7 +425,15 @@ stmt
     /*TODO: | While Statement */
     | FOR MK_LPAREN assign_expr_list MK_SEMICOLON relop_expr_list MK_SEMICOLON assign_expr_list MK_RPAREN stmt
         {
-            /*TODO*/
+            // xatier
+            $$ = makeStmtNode(FOR_STMT);
+            AST_NODE *assignExprList = Allocate(NONEMPTY_ASSIGN_EXPR_LIST_NODE);
+            makeChild(assignExprList, $3);
+            AST_NODE *relopExprList = Allocate(NONEMPTY_RELOP_EXPR_LIST_NODE);
+            makeChild(assignExprList, $5);
+            AST_NODE *assignExprList2 = Allocate(NONEMPTY_ASSIGN_EXPR_LIST_NODE);
+            makeChild(assignExprList2, $7);
+            makeFamily($$, 4, assignExprList, relopExprList, assignExprList2, $9);
         }
     | var_ref OP_ASSIGN relop_expr MK_SEMICOLON
         {
