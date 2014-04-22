@@ -419,7 +419,8 @@ stmt_list
 stmt
     : MK_LBRACE block MK_RBRACE
         {
-            /*TODO*/
+            // xatier
+            $$ = Allocate(BLOCK_NODE);
         }
     /*TODO: | While Statement */
     | FOR MK_LPAREN assign_expr_list MK_SEMICOLON relop_expr_list MK_SEMICOLON assign_expr_list MK_RPAREN stmt
