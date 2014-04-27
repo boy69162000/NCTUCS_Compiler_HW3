@@ -455,7 +455,7 @@ stmt
             $$ = makeStmtNode(IF_STMT);
             makeFamily($$, 3, $3, $5, $7);
         }
-    | ID MK_LPAREN nonempty_relop_expr_list MK_RPAREN MK_SEMICOLON
+    | ID MK_LPAREN relop_expr_list MK_RPAREN MK_SEMICOLON
         {
             // xatier
             $$ = makeStmtNode(FUNCTION_CALL_STMT);
