@@ -425,17 +425,17 @@ stmt
             $$ = Allocate(BLOCK_NODE);
             makeChild($$, $2);
         }
-    | WHILE MK_LPAREN relop_expr MK_RPAREN stmt
+    | WHILE MK_LPAREN relop_expr MK_RPAREN MK_LBRACE block MK_RBRACE
         {
             // xatier
             $$ = makeStmtNode(WHILE_STMT);
-            makeFamily($$, 2, $3, $5);
+            makeFamily($$, 2, $3, $6);
         }
-    | FOR MK_LPAREN assign_expr_list MK_SEMICOLON relop_expr_list MK_SEMICOLON assign_expr_list MK_RPAREN stmt
+    | FOR MK_LPAREN assign_expr_list MK_SEMICOLON relop_expr_list MK_SEMICOLON assign_expr_list MK_RPAREN MK_LBRACE block MK_RBRACE
         {
             // xatier
             $$ = makeStmtNode(FOR_STMT);
-            makeFamily($$, 4, $3, $5, $7, $9);
+            makeFamily($$, 4, $3, $5, $7, $10);
         }
     | var_ref OP_ASSIGN relop_expr MK_SEMICOLON
         {
@@ -449,11 +449,11 @@ stmt
             $$ = makeStmtNode(IF_STMT);
             makeFamily($$, 3, $3, $5, Allocate(NUL_NODE));
         }
-    | IF MK_LPAREN expr MK_RPAREN stmt ELSE stmt
+    | IF MK_LPAREN relop_expr MK_RPAREN MK_LBRACE block MK_RBRACE ELSE stmt
         {
             // xatier
             $$ = makeStmtNode(IF_STMT);
-            makeFamily($$, 3, $3, $5, $7);
+            makeFamily($$, 3, $3, $6, $9);
         }
     | ID MK_LPAREN relop_expr_list MK_RPAREN MK_SEMICOLON
         {
