@@ -682,13 +682,17 @@ factor
     | OP_MINUS CONST
         {
             $$ = makeExprNode(UNARY_OPERATION, UNARY_OP_NEGATIVE);
-            makeChild($$, $2);  // xatier: seems wrong
+            AST_NODE *c = Allocate(CONST_VALUE_NODE);
+            c->semantic_value.const1 = $2;
+            makeChild($$, c);
         }
     | OP_NOT CONST
         {
             //jyhsu
             $$ = makeExprNode(UNARY_OPERATION, UNARY_OP_LOGICAL_NEGATION);
-            makeChild($$, $2);  // xatier: seems wrong
+            AST_NODE *c = Allocate(CONST_VALUE_NODE);
+            c->semantic_value.const1 = $2;
+            makeChild($$, c);
         }
     | ID MK_LPAREN relop_expr_list MK_RPAREN
         {
