@@ -422,8 +422,7 @@ stmt
     : MK_LBRACE block MK_RBRACE
         {
             // xatier
-            $$ = Allocate(BLOCK_NODE);
-            makeChild($$, $2);
+            $$ = $2;
         }
     | WHILE MK_LPAREN relop_expr MK_RPAREN MK_LBRACE block MK_RBRACE
         {
@@ -443,11 +442,22 @@ stmt
             $$ = makeStmtNode(ASSIGN_STMT);
             makeFamily($$, 2, $1, $3);
         }
-    | IF MK_LPAREN relop_expr MK_RPAREN stmt
+    | IF MK_LPAREN relop_expr MK_RPAREN MK_LBRACE block MK_RBRACE
+        {
+            // xatier: there's only two kinds of forms
+            // if () { ... }       <- a normal if block
+            //
+            //  or
+            //
+            // if () ;             <- a single semicolon (null statement in C)
+            $$ = makeStmtNode(IF_STMT);
+            makeFamily($$, 3, $3, $6, Allocate(NUL_NODE));
+        }
+    | IF MK_LPAREN relop_expr MK_RPAREN MK_SEMICOLON
         {
             // xatier
             $$ = makeStmtNode(IF_STMT);
-            makeFamily($$, 3, $3, $5, Allocate(NUL_NODE));
+            makeFamily($$, 2, $3, Allocate(NUL_NODE));
         }
     | IF MK_LPAREN relop_expr MK_RPAREN MK_LBRACE block MK_RBRACE ELSE stmt
         {
