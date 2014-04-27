@@ -387,7 +387,7 @@ cfactor
             $$ = Allocate(CONST_VALUE_NODE);
             $$->semantic_value.const1 = $1;
         }
-    | MK_LPAREN cexpr MK_RPAREN        { $$ = $1; }        //jyhsu
+    | MK_LPAREN cexpr MK_RPAREN        { $$ = $2; }        //jyhsu
     ;
 
 init_id_list
@@ -467,7 +467,7 @@ stmt
         {
             // xatier
             $$ = makeStmtNode(RETURN_STMT);
-            makeChild($$, $1);
+            makeChild($$, $2);
         }
     ;
 
@@ -600,7 +600,7 @@ nonempty_relop_expr_list
     : nonempty_relop_expr_list MK_COMMA relop_expr
         {
             //jyhsu
-            $$ = makeSibling($1, $2);
+            $$ = makeSibling($1, $3);
         }
     | relop_expr
         {
@@ -682,13 +682,13 @@ factor
     | OP_MINUS CONST
         {
             $$ = makeExprNode(UNARY_OPERATION, UNARY_OP_NEGATIVE);
-            makeChild($$, $2);
+            makeChild($$, $2);  // xatier: seems wrong
         }
     | OP_NOT CONST
         {
             //jyhsu
             $$ = makeExprNode(UNARY_OPERATION, UNARY_OP_LOGICAL_NEGATION);
-            makeChild($$, $2);
+            makeChild($$, $2);  // xatier: seems wrong
         }
     | ID MK_LPAREN relop_expr_list MK_RPAREN
         {
