@@ -26,4 +26,6 @@ functions.o: functions.c
 
 clean:
 	rm -f $(TARGET) $(OBJECT) 
+	rm parser.output
+	rm parser.tab.h
 
