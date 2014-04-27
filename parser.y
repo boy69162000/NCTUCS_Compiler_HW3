@@ -423,38 +423,31 @@ stmt
         {
             // xatier
             $$ = Allocate(BLOCK_NODE);
+            makeChild($$, $2);
         }
     /*TODO: | While Statement */
     | FOR MK_LPAREN assign_expr_list MK_SEMICOLON relop_expr_list MK_SEMICOLON assign_expr_list MK_RPAREN stmt
         {
             // xatier
             $$ = makeStmtNode(FOR_STMT);
-            AST_NODE *assignExprList = Allocate(NONEMPTY_ASSIGN_EXPR_LIST_NODE);
-            makeChild(assignExprList, $3);
-            AST_NODE *relopExprList = Allocate(NONEMPTY_RELOP_EXPR_LIST_NODE);
-            makeChild(assignExprList, $5);
-            AST_NODE *assignExprList2 = Allocate(NONEMPTY_ASSIGN_EXPR_LIST_NODE);
-            makeChild(assignExprList2, $7);
-            makeFamily($$, 4, assignExprList, relopExprList, assignExprList2, $9);
+            makeFamily($$, 4, $3, $5, $7, $9);
         }
     | var_ref OP_ASSIGN relop_expr MK_SEMICOLON
         {
-            /*TODO*/
+            // xatier
+            $$ = makeStmtNode(ASSIGN_STMT);
+            makeFamily($$, 2, $1, $3);
         }
     /*TODO: | If Statement */
     /*TODO: | If then else */
     /*TODO: | function call */
-    | MK_SEMICOLON
-        {
-            /*TODO*/
-        }
-    | RETURN MK_SEMICOLON
-        {
-            /*TODO*/
-        }
+    | MK_SEMICOLON                     { $$ = Allocate(NUL_NODE); }        // xatier
+    | RETURN MK_SEMICOLON              { $$ = makeStmtNode(RETURN_STMT); } // xatier
     | RETURN relop_expr MK_SEMICOLON
         {
-            /*TODO*/
+            // xatier
+            $$ = makeStmtNode(RETURN_STMT);
+            makeChild($$, $1);
         }
     ;
 
