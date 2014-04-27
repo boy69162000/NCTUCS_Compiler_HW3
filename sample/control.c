@@ -27,4 +27,5 @@ int main() {
         } else {
             write("third");
         }
+        if (k == j) ;
 }
