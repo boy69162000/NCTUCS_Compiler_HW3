@@ -307,7 +307,7 @@ var_decl
         {
             //jyhsu
             $$ = makeDeclNode(VARIABLE_DECL);
-            makeFamily($$, 2, $1, $2);
+            makeFamily($$, 2, makeIDNode($1, NORMAL_ID), $2);
         }
     ;
 
