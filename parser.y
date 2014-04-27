@@ -425,7 +425,7 @@ stmt
             $$ = Allocate(BLOCK_NODE);
             makeChild($$, $2);
         }
-    | WHILE MK_LPAREN expr MK_RPAREN stmt
+    | WHILE MK_LPAREN relop_expr MK_RPAREN stmt
         {
             // xatier
             $$ = makeStmtNode(WHILE_STMT);
@@ -443,11 +443,11 @@ stmt
             $$ = makeStmtNode(ASSIGN_STMT);
             makeFamily($$, 2, $1, $3);
         }
-    | IF MK_LPAREN expr MK_RPAREN stmt
+    | IF MK_LPAREN relop_expr MK_RPAREN stmt
         {
             // xatier
             $$ = makeStmtNode(IF_STMT);
-            makeFamily($$, 2, $3, $5);
+            makeFamily($$, 3, $3, $5, Allocate(NUL_NODE));
         }
     | IF MK_LPAREN expr MK_RPAREN stmt ELSE stmt
         {
@@ -455,11 +455,11 @@ stmt
             $$ = makeStmtNode(IF_STMT);
             makeFamily($$, 3, $3, $5, $7);
         }
-    | ID MK_LPAREN param_list MK_RPAREN  MK_SEMICOLON
+    | ID MK_LPAREN nonempty_relop_expr_list MK_RPAREN MK_SEMICOLON
         {
             // xatier
             $$ = makeStmtNode(FUNCTION_CALL_STMT);
-            makeChild($$, $3);
+            makeFamily($$, 2, makeIDNode($1, NORMAL_ID), $3);
         }
     | MK_SEMICOLON                     { $$ = Allocate(NUL_NODE); }        // xatier
     | RETURN MK_SEMICOLON              { $$ = makeStmtNode(RETURN_STMT); } // xatier
